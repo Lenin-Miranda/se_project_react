@@ -1,0 +1,51 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.header__logo-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+}
+
+.header__date {
+  margin: 0;
+  font-family: "cabinet", sans-serif;
+  font-size: 20px;
+}
+
+.header__logo {
+  width: 89px;
+  height: 40px;
+}
+
+.header__search-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.header__search-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: "cabinet", sans-serif;
+  font-size: 20px;
+}
+
+.header__search-username {
+  font-family: "cabinet", sans-serif;
+  font-size: 20px;
+}
+
+.header__search-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
