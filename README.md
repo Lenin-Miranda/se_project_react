@@ -1,9 +1,30 @@
-# WTWR (What to Wear?)
+# WTWH (What to Wear)🌦👕
 
-## About the project
+A React application that displays the current weather based on your location and filters recommended clothing items accordingly.
 
-The idea of the application is pretty simple - we make a call to an API, which then responds with the daily weather forecast. We collect the weather data, process it, and then based on the forecast, we recommend suitable clothing to the user.
+## 📌 Main Features
+
+- 🔍 Gets your location using the browser’s geolocation.
+- 🌡 Fetches current temperature using an external API.
+- 🏙 Displays the name of your city.
+- 🧥 Filters and shows clothing cards based on the weather.
+- 🧭 Dynamic UI with reusable components (Header, Main, Footer).
+
+---
 
 ## Links
 
-- [Figma Design](https://www.figma.com/file/DTojSwldenF9UPKQZd6RRb/Sprint-10%3A-WTWR)
+- 🎥 Video: (https://drive.google.com/file/d/1eudOzGmCdUco_PLLlmAfe8PWBfRuapBI/view?usp=drive_link)
+
+---
+
+## 🧠 Weather Logic
+
+We use `navigator.geolocation.getCurrentPosition()` to get coordinates. Then we make two API requests:
+
+1. **Weather data** from OpenWeather:
+
+```js
+fetchWeatherByCoords(latitude, longitude)s
+
+```
