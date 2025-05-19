@@ -1,5 +1,4 @@
 import "./ItemCard.css";
-import shirt from "../../assets/T-shirt.jpg";
 
 function ItemCard({ item, onCardClick }) {
   return (
