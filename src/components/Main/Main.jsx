@@ -1,17 +1,8 @@
 import "./Main.css";
 import ItemCard from "../ItemCard/ItemCard";
 import WeatherCard from "../WeatherCard/WeatherCard";
-import ModalWithForm from "../ModalWithForm/ModalWithForm";
-import ItemModal from "../ItemModal/ItemModal";
-import { Children, useState } from "react";
-function Main({
-  temperature,
-  clothes,
-  children,
-  onCloseModal,
-  selectedCard,
-  onCardClick,
-}) {
+
+function Main({ temperature, clothes, children, onCardClick }) {
   return (
     <div className="main">
       <WeatherCard temperature={temperature} />
@@ -26,13 +17,6 @@ function Main({
         })}
       </ul>
       {children}
-      {selectedCard && (
-        <ItemModal
-          name={"item-modal"}
-          item={selectedCard}
-          onClose={onCloseModal}
-        ></ItemModal>
-      )}
     </div>
   );
 }

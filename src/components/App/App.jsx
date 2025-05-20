@@ -10,6 +10,8 @@ import {
 import getWeatherType from "../../utils/constants";
 import { DEFAULT_COORDS } from "../../utils/constants";
 import { defaultClothingItems } from "../../utils/constants";
+import ModalWithForm from "../ModalWithForm/ModalWithForm";
+import ItemModal from "../ItemModal/ItemModal";
 
 function App() {
   const [activeModal, setActiveModal] = useState(null);
@@ -18,6 +20,7 @@ function App() {
   const [temperature, setTemperature] = useState(null);
   const [city, setCity] = useState(null);
   const [weatherType, setWeatherType] = useState(null);
+  const [clothingItems, setClothingItems] = useState(defaultClothingItems);
 
   useEffect(() => {
     const { latitude, longitude } = DEFAULT_COORDS;
@@ -53,7 +56,7 @@ function App() {
     setActiveModal(modalName);
   }
 
-  const filteredClothingItems = defaultClothingItems.filter(
+  const filteredClothingItems = clothingItems.filter(
     (item) => item.weather === weatherType
   );
 
@@ -74,7 +77,8 @@ function App() {
               title={"New garment"}
               name={"NewGarment"}
               buttonText={"Add garment"}
-              onClose={onCloseModal}
+              onClose={handleOnClose}
+              isOpen={activeModal === "form"}
             >
               {" "}
               <label className="modal__form-label" htmlFor="name">
@@ -136,6 +140,13 @@ function App() {
                 </label>
               </div>
             </ModalWithForm>
+          )}
+          {selectedCard && (
+            <ItemModal
+              name={"item-modal"}
+              item={selectedCard}
+              onClose={handleOnClose}
+            ></ItemModal>
           )}
         </Main>
 
