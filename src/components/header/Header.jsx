@@ -3,7 +3,8 @@ import headerLogo from "./../../assets/logo.svg";
 import "./Header.css";
 import profielAvatar from "./../../assets/profile.svg";
 import { Link, NavLink } from "react-router-dom";
-function Header({ onOpen, location, children }) {
+import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
+function Header({ onOpen, location }) {
   const currentDate = new Date();
   const formattedDate = currentDate.toLocaleDateString("en-US", {
     month: "long",
@@ -14,7 +15,7 @@ function Header({ onOpen, location, children }) {
     <header>
       <div className="header">
         <div className="header__logo-container">
-          <Link to="/">
+          <Link to="/se_project_react/">
             <img src={headerLogo} className="header__logo" />
           </Link>
           <p className="header__date">
@@ -22,7 +23,7 @@ function Header({ onOpen, location, children }) {
           </p>
         </div>
         <div className="header__search-container">
-          {children}
+          <ToggleSwitch />
           <button className="header__search-button" onClick={onOpen}>
             + Add clothes
           </button>

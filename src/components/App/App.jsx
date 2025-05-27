@@ -113,13 +113,11 @@ function App() {
       <CurrentTemperatureUnitContext.Provider
         value={{ currentTemperatureUnit, handleToggleSwitchChange }}
       >
-        <Header onOpen={() => handleOpenModal("form")} location={city}>
-          <ToggleSwitch />
-        </Header>
+        <Header onOpen={() => handleOpenModal("form")} location={city}></Header>
 
         <Routes>
           <Route
-            path="/"
+            path="/se_project_react/"
             element={
               <Main
                 temperature={temperature}
