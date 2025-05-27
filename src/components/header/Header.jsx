@@ -15,7 +15,7 @@ function Header({ onOpen, location }) {
     <header>
       <div className="header">
         <div className="header__logo-container">
-          <Link to="/se_project_react/">
+          <Link to="/">
             <img src={headerLogo} className="header__logo" />
           </Link>
           <p className="header__date">
