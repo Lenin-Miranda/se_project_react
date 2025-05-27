@@ -1,6 +1,14 @@
 import "./ModalWithForm.css";
 import closeIcon from "../../assets/close-icon.svg";
-function ModalWithForm({ title, name, buttonText, onClose, children, isOpen }) {
+function ModalWithForm({
+  title,
+  name,
+  buttonText,
+  onClose,
+  children,
+  isOpen,
+  onSubmit,
+}) {
   function handleClickOverlay(e) {
     if (e.target.classList.contains("modal")) {
       onClose;
@@ -12,7 +20,7 @@ function ModalWithForm({ title, name, buttonText, onClose, children, isOpen }) {
       className={`modal ${isOpen ? "modal_opened" : ""}`}
       onClick={handleClickOverlay}
     >
-      <form className="modal__form" name={name} noValidate>
+      <form className="modal__form" name={name} onSubmit={onSubmit} noValidate>
         <div className="modal__form-container">
           <div className="modal__form-container-image">
             <p className="modal__form-title">{title}</p>

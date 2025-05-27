@@ -1,0 +1,30 @@
+.clothes__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 8px;
+}
+
+.clothes__container-header {
+  display: flex;
+  flex-direction: row;
+  margin: 0 0 16px 90px;
+  gap: 20px;
+  align-items: center;
+  height: 20px;
+  font-size: 20px;
+}
+
+.clothes__container-button {
+  border: none;
+  background: none;
+  height: 20px;
+  opacity: 0.6;
+  cursor: pointer;
+  font-size: 20px;
+  padding: 0;
+}
+.clothes__container-paragraph {
+  margin: 0;
+  height: 20px;
+}

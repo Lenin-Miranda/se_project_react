@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import headerLogo from "./../../assets/logo.svg";
 import "./Header.css";
 import profielAvatar from "./../../assets/profile.svg";
-function Header({ onOpen, location }) {
+import { Link, NavLink } from "react-router-dom";
+function Header({ onOpen, location, children }) {
   const currentDate = new Date();
   const formattedDate = currentDate.toLocaleDateString("en-US", {
     month: "long",
@@ -13,17 +14,22 @@ function Header({ onOpen, location }) {
     <header>
       <div className="header">
         <div className="header__logo-container">
-          <img src={headerLogo} className="header__logo" />
+          <Link to="/">
+            <img src={headerLogo} className="header__logo" />
+          </Link>
           <p className="header__date">
             {formattedDate}, {location ?? "Loading..."}
           </p>
         </div>
         <div className="header__search-container">
+          {children}
           <button className="header__search-button" onClick={onOpen}>
             + Add clothes
           </button>
-          <p className="header__search-username">Lenin Miranda</p>
-          <img className="header__search-avatar" src={profielAvatar} />
+          <Link to={"/profile"} className="header__search-link">
+            <p className="header__search-username">Lenin Miranda</p>
+            <img className="header__search-avatar" src={profielAvatar} />
+          </Link>
         </div>
       </div>
     </header>

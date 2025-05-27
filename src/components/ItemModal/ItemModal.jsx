@@ -1,7 +1,11 @@
 import "./ItemModal.css";
 import "../ModalWithForm/ModalWithForm.css";
 import closeButton from "../../assets/close-icon.svg";
-function ItemModal({ item, onClose, name }) {
+function ItemModal({ item, onClose, name, onDeleteItem }) {
+  function handleDeleteItem() {
+    onDeleteItem(item._id);
+  }
+
   return (
     <div className={`modal modal__type_${name} modal_opened`}>
       <div className="modal__item">
@@ -18,7 +22,7 @@ function ItemModal({ item, onClose, name }) {
           <div className="modal__item-container-image">
             <img
               className="modal__item-image"
-              src={item.link}
+              src={item.imageUrl}
               alt={item.name}
             />
             <div className="modal__item-container-description">
@@ -28,6 +32,14 @@ function ItemModal({ item, onClose, name }) {
               <p className="modal__item-container-description-title">
                 Weather: {item.weather}
               </p>
+
+              <button
+                onClick={handleDeleteItem}
+                className="modal__item-container-delete"
+                type="button"
+              >
+                Delete Item
+              </button>
             </div>
           </div>
         </div>

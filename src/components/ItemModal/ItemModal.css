@@ -24,14 +24,16 @@
 }
 
 .modal__item-container-description {
-  margin: 20px 0 32px 32px;
+  margin: 20px 32px 32px;
   display: flex;
   gap: 12px;
   flex-direction: column;
+  position: relative;
 }
 
 .modal__item-container-description-title {
   margin: 0;
+  font-size: 20px;
 }
 
 .modal__item-close {
@@ -43,5 +45,15 @@
 
 .modal__item-close-image {
   background: transparent;
+  cursor: pointer;
+}
+
+.modal__item-container-delete {
+  font-size: 20px;
+  color: #ff4d00;
+  background: none;
+  border: none;
+  position: absolute;
+  right: 0;
   cursor: pointer;
 }

@@ -1,0 +1,16 @@
+.sidebar__container-header {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.sidebar__container-header-title {
+  font-size: 20px;
+  margin: 0;
+}
+.sidebar__container-header-image {
+  width: 56px;
+  height: 56px;
+}
