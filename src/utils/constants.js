@@ -1,4 +1,4 @@
-function getWeatherType(temp) {
+export function getWeatherType(temp) {
   if (temp >= 86) {
     return "hot";
   } else if (temp >= 66) {
@@ -7,7 +7,7 @@ function getWeatherType(temp) {
     return "cold";
   }
 }
-const defaultClothingItems = [
+export const defaultClothingItems = [
   {
     _id: 0,
     name: "Cap",
@@ -46,9 +46,6 @@ const defaultClothingItems = [
   },
 ];
 
-export { defaultClothingItems };
-
-export default getWeatherType;
 export const DEFAULT_COORDS = {
   latitude: 40.7128,
   longitude: -74.006,

@@ -7,14 +7,12 @@ import {
   fetchWeatherByCoords,
   fetchCityByCoords,
 } from "../../utils/WeatherApi";
-import getWeatherType, {
-  DEFAULT_COORDS,
-  defaultClothingItems,
-} from "../../utils/constants";
+import { getWeatherType, DEFAULT_COORDS } from "../../utils/constants";
+
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import ItemModal from "../ItemModal/ItemModal";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
-import CurrentTemperatureUnitContext from "../../context/currenTemperatureUnit";
+import CurrentTemperatureUnitContext from "../../context/currentTemperatureUnit";
 import { Route, Routes } from "react-router-dom";
 import Profile from "../Profile/Profile";
 import AddItemModal from "../AddItemModal/AddItemModal";
@@ -23,7 +21,7 @@ import { getItems, deleteItem, addItem } from "../../utils/Api";
 function App() {
   const [activeModal, setActiveModal] = useState(null);
   const [selectedCard, setSelectedCard] = useState(null);
-  const [location, setLocation] = useState(null);
+  const [location, setLocation] = useState("");
   const [temperature, setTemperature] = useState({});
   const [city, setCity] = useState(null);
   const [weatherType, setWeatherType] = useState(null);
@@ -44,16 +42,9 @@ function App() {
         };
         setTemperature(weather.temperature);
         setWeatherType(getWeatherType(data.main.temp));
+        setCity(data.name);
       })
       .catch((err) => console.error("Weather error:", err));
-
-    fetchCityByCoords(latitude, longitude)
-      .then((data) => {
-        if (data[0]?.name) {
-          setCity(data[0].name);
-        }
-      })
-      .catch((err) => console.error("City fetch error:", err));
   }, []);
 
   useEffect(() => {
@@ -97,14 +88,13 @@ function App() {
   }
 
   function handleAddItemSubmit({ name, imageUrl, weather }) {
-    console.log({ name, imageUrl, weather });
     addItem({ name, imageUrl, weather })
       .then((newItem) => {
         setClothingItems([newItem, ...clothingItems]);
         handleOnClose();
       })
       .catch((err) => {
-        console.error("Erro adding item:", err);
+        console.error("Error adding item:", err);
       });
   }
 
@@ -147,16 +137,14 @@ function App() {
           onClose={handleOnClose}
         />
 
-        {selectedCard &&
-          (console.log("selectedCard:", { selectedCard }),
-          (
-            <ItemModal
-              name="item-modal"
-              item={selectedCard}
-              onClose={handleOnClose}
-              onDeleteItem={handleDeleteItem}
-            />
-          ))}
+        {selectedCard && (
+          <ItemModal
+            name="item-modal"
+            item={selectedCard}
+            onClose={handleOnClose}
+            onDeleteItem={handleDeleteItem}
+          />
+        )}
 
         <Footer />
       </CurrentTemperatureUnitContext.Provider>

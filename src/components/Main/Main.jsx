@@ -2,7 +2,7 @@ import "./Main.css";
 import ItemCard from "../ItemCard/ItemCard";
 import WeatherCard from "../WeatherCard/WeatherCard";
 import { useContext } from "react";
-import CurrentTemperatureUnitContext from "../../context/currenTemperatureUnit";
+import CurrentTemperatureUnitContext from "../../context/currentTemperatureUnit";
 function Main({ temperature, clothes, children, onCardClick, weatherType }) {
   const filteredClothingItems = clothes.filter(
     (item) => item.weather === weatherType

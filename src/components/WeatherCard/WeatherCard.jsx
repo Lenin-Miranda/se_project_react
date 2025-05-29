@@ -1,7 +1,6 @@
 import "./WeatherCard.css";
 import sun from "../../assets/Ellipse.svg";
 import cloud from "../../assets/union.svg";
-import { useState } from "react";
 
 function WeatherCard({ temperature }) {
   return (
@@ -12,10 +11,12 @@ function WeatherCard({ temperature }) {
         </div>
         <div className="weather__card-image-container">
           <img
+            alt="cloud icon"
             className="weather__card-image weather__card-image_type_cloud"
             src={cloud}
           />
           <img
+            alt="sun icon"
             className="weather__card-image weather__card-image_type_sun"
             src={sun}
           />

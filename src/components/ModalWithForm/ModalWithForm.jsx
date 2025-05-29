@@ -11,7 +11,7 @@ function ModalWithForm({
 }) {
   function handleClickOverlay(e) {
     if (e.target.classList.contains("modal")) {
-      onClose;
+      onClose();
     }
   }
 

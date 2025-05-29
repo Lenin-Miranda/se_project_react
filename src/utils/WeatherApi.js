@@ -18,4 +18,3 @@ export const fetchCityByCoords = (lat, lon) => {
     `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${ApiKey}`
   ).then(checkResponse);
 };
-export default { fetchCityByCoords, fetchWeatherByCoords };
