@@ -1,10 +1,13 @@
 import "./ItemModal.css";
 import "../ModalWithForm/ModalWithForm.css";
 import closeButton from "../../assets/close-icon.svg";
-function ItemModal({ item, onClose, name, onDeleteItem }) {
+import { useEffect } from "react";
+function ItemModal({ item, onClose, name, onDeleteItem, isOpen }) {
   function handleDeleteItem() {
     onDeleteItem(item._id);
   }
+
+  if (!isOpen || !item) return null;
 
   return (
     <div className={`modal modal__type_${name} modal_opened`}>

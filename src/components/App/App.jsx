@@ -137,14 +137,13 @@ function App() {
           onClose={handleOnClose}
         />
 
-        {selectedCard && (
-          <ItemModal
-            name="item-modal"
-            item={selectedCard}
-            onClose={handleOnClose}
-            onDeleteItem={handleDeleteItem}
-          />
-        )}
+        <ItemModal
+          name="item-modal"
+          item={selectedCard}
+          onClose={handleOnClose}
+          onDeleteItem={handleDeleteItem}
+          isOpen={activeModal === "item"}
+        />
 
         <Footer />
       </CurrentTemperatureUnitContext.Provider>
