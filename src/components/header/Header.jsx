@@ -16,7 +16,7 @@ function Header({ onOpen, location }) {
       <div className="header">
         <div className="header__logo-container">
           <Link to="/">
-            <img src={headerLogo} alt="header-logo" className="header__logo" />
+            <img src={headerLogo} alt="header logo" className="header__logo" />
           </Link>
           <p className="header__date">
             {formattedDate}, {location ?? "Loading..."}
@@ -32,7 +32,7 @@ function Header({ onOpen, location }) {
             <img
               className="header__search-avatar"
               src={profielAvatar}
-              alt="profile-picture"
+              alt="profile picture"
             />
           </Link>
         </div>
