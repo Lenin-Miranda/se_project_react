@@ -1,5 +1,6 @@
 import "./ModalWithForm.css";
 import closeIcon from "../../assets/close-icon.svg";
+import { useEffect, useState } from "react";
 function ModalWithForm({
   title,
   name,
@@ -8,10 +9,22 @@ function ModalWithForm({
   children,
   isOpen,
   onSubmit,
+  buttonTextSecondary,
+  onOpenSignIn,
+  onOpenLogIn,
+  isDisabled = false,
 }) {
   function handleClickOverlay(e) {
     if (e.target.classList.contains("modal")) {
       onClose();
+    }
+  }
+
+  function handleClickSecondaryButton() {
+    if (buttonTextSecondary === "Or sign up") {
+      onOpenSignIn();
+    } else {
+      onOpenLogIn();
     }
   }
 
@@ -33,9 +46,29 @@ function ModalWithForm({
             </button>
           </div>
           {children}
-          <button className="modal__form-button" type="submit">
-            {buttonText}
-          </button>
+          <div className="modal__form-button-container">
+            <button
+              className="modal__form-button"
+              type="submit"
+              disabled={isDisabled}
+              style={{
+                backgroundColor: isDisabled ? "#ccc" : "#000",
+                color: "#fff",
+                cursor: isDisabled ? "not-allowed" : "pointer",
+              }}
+            >
+              {buttonText}
+            </button>
+            {buttonTextSecondary && (
+              <button
+                className="modal__form-button modal__form-button-secondary"
+                type="button"
+                onClick={handleClickSecondaryButton}
+              >
+                {buttonTextSecondary}
+              </button>
+            )}
+          </div>
         </div>
       </form>
     </div>

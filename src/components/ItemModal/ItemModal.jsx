@@ -1,13 +1,18 @@
 import "./ItemModal.css";
 import "../ModalWithForm/ModalWithForm.css";
 import closeButton from "../../assets/close-icon.svg";
-import { useEffect } from "react";
+import { useContext } from "react";
+import CurrentUserContext from "../../context/CurrentUserContext";
+
 function ItemModal({ item, onClose, name, onDeleteItem, isOpen }) {
+  const currentUser = useContext(CurrentUserContext);
+  if (!isOpen || !item) return null;
+
+  const isOwn = item.owner === currentUser?._id;
+
   function handleDeleteItem() {
     onDeleteItem(item._id);
   }
-
-  if (!isOpen || !item) return null;
 
   return (
     <div className={`modal modal__type_${name} modal_opened`}>
@@ -36,13 +41,15 @@ function ItemModal({ item, onClose, name, onDeleteItem, isOpen }) {
                 Weather: {item.weather}
               </p>
 
-              <button
-                onClick={handleDeleteItem}
-                className="modal__item-container-delete"
-                type="button"
-              >
-                Delete Item
-              </button>
+              {isOwn ? (
+                <button
+                  onClick={handleDeleteItem}
+                  className="modal__item-container-delete"
+                  type="button"
+                >
+                  Delete Item
+                </button>
+              ) : null}
             </div>
           </div>
         </div>
