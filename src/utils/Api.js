@@ -88,3 +88,20 @@ export function removeCardLike(_id) {
     res.ok ? res.json() : Promise.reject(`Error: ${res.status}`)
   );
 }
+
+export function updateProfile({ name, avatar }) {
+  const token = localStorage.getItem("token");
+  return fetch(`${BASE_URL}/users/me`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ name, avatar }),
+  }).then((res) => {
+    if (!res.ok) {
+      throw new Error(`Error updating profile: ${res.status}`);
+    }
+    return res.json();
+  });
+}

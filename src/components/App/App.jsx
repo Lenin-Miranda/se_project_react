@@ -24,6 +24,7 @@ import {
   login,
   addCardLike,
   removeCardLike,
+  updateProfile,
 } from "../../utils/Api";
 import LogIn from "../LogIn/LogInModal";
 import { signup } from "../../utils/Api";
@@ -200,17 +201,33 @@ function App() {
 
   function handleCardLike(item) {
     console.log(item);
-    const token = localStorage.getItem("token");
-    const isLiked = item.likes.includes(currentUser._id);
+    const isLiked = item.likes && item.likes.includes(currentUser._id);
     const action = isLiked ? removeCardLike : addCardLike;
 
-    action(item._id, token)
+    action(item._id)
       .then((updatedCard) => {
         setClothingItems((prevItems) =>
           prevItems.map((card) => (card._id === item._id ? updatedCard : card))
         );
       })
       .catch((err) => console.error("Error handling like:", err));
+  }
+
+  function handleUpdateProfile({ name, avatar }) {
+    updateProfile({ name, avatar })
+      .then((updatedUser) => {
+        // Preservar el _id del usuario actual si el servidor no lo devuelve
+        const userToSet = {
+          ...updatedUser,
+          _id: updatedUser._id || currentUser._id,
+        };
+
+        setCurrentUser(userToSet);
+        handleOnClose();
+      })
+      .catch((err) => {
+        console.error("Error updating profile:", err);
+      });
   }
 
   return (
@@ -295,6 +312,7 @@ function App() {
             name="profile-data-modal"
             onClose={handleOnClose}
             isOpen={activeModal === "profile"}
+            onUpdateProfile={handleUpdateProfile}
           />
 
           <Footer />
