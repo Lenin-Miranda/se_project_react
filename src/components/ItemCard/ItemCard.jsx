@@ -7,7 +7,7 @@ import CurrentUserContext from "../../context/CurrentUserContext";
 function ItemCard({ item, onCardClick, onCardLike }) {
   const currentUser = useContext(CurrentUserContext);
   const isLiked = item.likes && item.likes.includes(currentUser?._id);
-  const isOwnedByCurrentUser = item.owner && item.owner === currentUser?._id;
+  const isLoggedIn = !!currentUser;
 
   const likeButtonClassName = `item__like-button ${
     isLiked ? "item__like-button_active" : ""
@@ -17,7 +17,7 @@ function ItemCard({ item, onCardClick, onCardLike }) {
     <li className="card__content" onClick={() => onCardClick(item)}>
       <div className="card__container-content">
         <p className="card__title">{item.name}</p>
-        {isOwnedByCurrentUser && (
+        {isLoggedIn && (
           <button
             className="card__btn"
             onClick={(e) => {

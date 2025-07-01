@@ -25,6 +25,7 @@ import {
   addCardLike,
   removeCardLike,
   updateProfile,
+  getCurrentUser,
 } from "../../utils/Api";
 import LogIn from "../LogIn/LogInModal";
 import { signup } from "../../utils/Api";
@@ -40,9 +41,11 @@ function App() {
   const [weatherType, setWeatherType] = useState(null);
   const [clothingItems, setClothingItems] = useState([]);
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
-  const [isLogIn, setIsLogIn] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [userData, setUserData] = useState({ email: "", password: "" });
+
+  // Derivar isLogIn del currentUser para mantener consistencia
+  const isLogIn = !!currentUser;
 
   function handleOpenSignIn() {
     setActiveModal("signin");
@@ -53,13 +56,6 @@ function App() {
   function handleOpenProfile() {
     setActiveModal("profile");
   }
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setIsLogIn(true);
-    }
-  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -157,46 +153,43 @@ function App() {
     login({ email, password })
       .then((data) => {
         if (data.token) {
-          const user = { email: data.email, name: data.name };
-          setUserData(user);
-          setCurrentUser(user);
-          setIsLogIn(true);
           localStorage.setItem("token", data.token);
+          // Obtener los datos completos del usuario después del login
+          return getCurrentUser();
+        }
+      })
+      .then((userData) => {
+        if (userData) {
+          setCurrentUser(userData);
           setActiveModal(null);
         }
       })
-      .catch(console.error);
+      .catch((error) => {
+        console.error("Login error:", error);
+        // Limpiar token si hay error
+        localStorage.removeItem("token");
+      });
   }
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) return;
 
-    // Aquí haces una llamada al backend para verificar el token
-    fetch("http://localhost:3001/users/me", {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => {
-        if (!res.ok) throw new Error("Token inválido");
-        return res.json();
-      })
+    // Verificar el token y obtener los datos del usuario
+    getCurrentUser()
       .then((user) => {
         setCurrentUser(user);
-        setIsLogIn(true);
       })
       .catch((err) => {
         console.error("Error validando token:", err);
         localStorage.removeItem("token"); // borra el token si no es válido
+        setCurrentUser(null);
       });
   }, []);
 
   function handleLogout() {
     localStorage.removeItem("token");
     setCurrentUser(null);
-    setIsLogIn(false);
   }
 
   function handleCardLike(item) {

@@ -11,6 +11,10 @@ export function getItems() {
 
 export function addItem({ name, imageUrl, weather }) {
   const token = localStorage.getItem("token");
+  if (!token) {
+    throw new Error("No token found");
+  }
+
   return fetch(`${BASE_URL}/items`, {
     method: "POST",
     headers: {
@@ -20,6 +24,10 @@ export function addItem({ name, imageUrl, weather }) {
     body: JSON.stringify({ name, imageUrl, weather }),
   }).then((res) => {
     if (!res.ok) {
+      if (res.status === 401) {
+        localStorage.removeItem("token");
+        throw new Error("Token expired or invalid");
+      }
       throw new Error(`Error: ${res.status}`);
     }
     return res.json();
@@ -87,6 +95,30 @@ export function removeCardLike(_id) {
   }).then((res) =>
     res.ok ? res.json() : Promise.reject(`Error: ${res.status}`)
   );
+}
+
+export function getCurrentUser() {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    throw new Error("No token found");
+  }
+
+  return fetch(`${BASE_URL}/users/me`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }).then((res) => {
+    if (!res.ok) {
+      if (res.status === 401) {
+        // Token expirado o inválido
+        localStorage.removeItem("token");
+        throw new Error("Token expired or invalid");
+      }
+      throw new Error(`Error getting user data: ${res.status}`);
+    }
+    return res.json();
+  });
 }
 
 export function updateProfile({ name, avatar }) {
