@@ -1,11 +1,6 @@
-const ApiKey = "6d7837223690b783eb400bcc5c5bf085";
+import { checkResponse } from "./Api";
 
-function checkResponse(res) {
-  if (!res.ok) {
-    throw new Error(`Error: ${res.status}`);
-  }
-  return res.json();
-}
+const ApiKey = "6d7837223690b783eb400bcc5c5bf085";
 
 export const fetchWeatherByCoords = async (lat, lon) => {
   return fetch(

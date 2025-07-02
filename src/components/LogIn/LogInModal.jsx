@@ -16,6 +16,12 @@ function LogIn({ isOpen, onLogin, onClose, onOpenSignIn, onOpenLogIn }) {
     }));
   };
 
+  useEffect(() => {
+    if (!isOpen) {
+      setFormData({ email: "", password: "" });
+    }
+  }, [isOpen]);
+
   const isDisabled = !formData.email || !formData.password;
 
   const handleSubmit = (e) => {

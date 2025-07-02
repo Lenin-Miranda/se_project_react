@@ -1,12 +1,17 @@
-const BASE_URL = "http://localhost:3001";
+export function checkResponse(res) {
+  if (!res.ok) {
+    throw new Error(`Error: ${res.status}`);
+  }
+  return res.json();
+}
+
+const BASE_URL =
+  process.env.NODE_ENV === "production"
+    ? "https://35.203.136.160"
+    : "http://localhost:3001";
 
 export function getItems() {
-  return fetch(`${BASE_URL}/items`).then((res) => {
-    if (!res.ok) {
-      throw new Error(`Error: ${res.status}`);
-    }
-    return res.json();
-  });
+  return fetch(`${BASE_URL}/items`).then(checkResponse);
 }
 
 export function addItem({ name, imageUrl, weather }) {
@@ -39,38 +44,7 @@ export function deleteItem(_id) {
   return fetch(`${BASE_URL}/items/${_id}`, {
     method: "DELETE",
     headers: { Authorization: `Bearer ${token}` },
-  }).then((res) => {
-    if (!res.ok) {
-      throw new Error(`Error deleting item: ${res.status}`);
-    }
-    return _id;
-  });
-}
-
-export function signup({ name, password, email, avatar }) {
-  return fetch(`${BASE_URL}/signup`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "content-type": " application/json",
-    },
-    body: JSON.stringify({ name, password, email, avatar }),
-  }).then((res) => {
-    return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
-  });
-}
-
-export function login({ email, password }) {
-  return fetch(`${BASE_URL}/signin`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ email, password }),
-  }).then((res) => {
-    return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
-  });
+  }).then(checkResponse);
 }
 
 export function addCardLike(_id) {
@@ -80,9 +54,7 @@ export function addCardLike(_id) {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-  }).then((res) =>
-    res.ok ? res.json() : Promise.reject(`Error: ${res.status}`)
-  );
+  }).then(checkResponse);
 }
 
 export function removeCardLike(_id) {
@@ -92,48 +64,5 @@ export function removeCardLike(_id) {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-  }).then((res) =>
-    res.ok ? res.json() : Promise.reject(`Error: ${res.status}`)
-  );
-}
-
-export function getCurrentUser() {
-  const token = localStorage.getItem("token");
-  if (!token) {
-    throw new Error("No token found");
-  }
-
-  return fetch(`${BASE_URL}/users/me`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  }).then((res) => {
-    if (!res.ok) {
-      if (res.status === 401) {
-        // Token expirado o inválido
-        localStorage.removeItem("token");
-        throw new Error("Token expired or invalid");
-      }
-      throw new Error(`Error getting user data: ${res.status}`);
-    }
-    return res.json();
-  });
-}
-
-export function updateProfile({ name, avatar }) {
-  const token = localStorage.getItem("token");
-  return fetch(`${BASE_URL}/users/me`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({ name, avatar }),
-  }).then((res) => {
-    if (!res.ok) {
-      throw new Error(`Error updating profile: ${res.status}`);
-    }
-    return res.json();
-  });
+  }).then(checkResponse);
 }

@@ -21,14 +21,11 @@ import {
   getItems,
   deleteItem,
   addItem,
-  login,
   addCardLike,
   removeCardLike,
-  updateProfile,
-  getCurrentUser,
 } from "../../utils/Api";
+import { login, signup, getCurrentUser, updateProfile } from "../../utils/auth";
 import LogIn from "../LogIn/LogInModal";
-import { signup } from "../../utils/Api";
 import CurrentUserContext from "../../context/CurrentUserContext";
 import ProfileData from "../Profile/ProfileData";
 import ProtectedRoute from "./ProtectedRoute";
@@ -56,13 +53,6 @@ function App() {
   function handleOpenProfile() {
     setActiveModal("profile");
   }
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      setActiveModal("login");
-    }
-  }, []);
 
   useEffect(() => {
     const { latitude, longitude } = DEFAULT_COORDS;
@@ -138,8 +128,7 @@ function App() {
   function handleRegistration({ name, email, password, avatar }) {
     signup({ name, email, password, avatar })
       .then((res) => {
-        setCurrentUser(res);
-        setActiveModal(null);
+        return handleLogin({ email, password });
       })
       .catch((err) => {
         console.error("Error al registrar:", err);
@@ -193,7 +182,7 @@ function App() {
   }
 
   function handleCardLike(item) {
-    console.log(item);
+    if (!currentUser) return; // Si no hay usuario logueado, no se puede dar like
     const isLiked = item.likes && item.likes.includes(currentUser._id);
     const action = isLiked ? removeCardLike : addCardLike;
 
@@ -244,7 +233,6 @@ function App() {
                 <Main
                   temperature={temperature}
                   clothes={clothingItems}
-                  selectedCard={selectedCard}
                   onCloseModal={handleOnClose}
                   onCardClick={handleOnCardClick}
                   weatherType={weatherType}

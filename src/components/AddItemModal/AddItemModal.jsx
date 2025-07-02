@@ -64,7 +64,7 @@ function AddItemModal({ isOpen, onAddItem, onClose }) {
           <label
             key={weatherOption}
             className="modal__form-label-selection"
-            htmlFor={weather}
+            htmlFor={weatherOption}
           >
             <input
               className="modal__form-input modal__form-input-type-radio"
