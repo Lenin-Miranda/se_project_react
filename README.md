@@ -33,21 +33,109 @@ WTWR es una aplicación web donde los usuarios pueden compartir prendas de ropa 
 
 ## Estructura del Proyecto
 
-## 📌 Main Features
-
-- 🔍 Gets your location using the browser's geolocation.
-- 🌡 Fetches current temperature using an external API.
-- 🏙 Displays the name of your city.
-- 🧥 Filters and shows clothing cards based on the weather.
-- 🧭 Dynamic UI with reusable components (Header, Main, Footer).
+```
+/
+├── dist/         # Archivos estáticos generados para producción (build)
+├── src/          # Código fuente del frontend (React)
+├── public/       # Archivos públicos
+├── package.json  # Dependencias y scripts de npm
+├── vite.config.js
+└── README.md
+```
 
 ---
 
-## Links
+## Instalación Local
 
-- 🎥 Video: (https://drive.google.com/file/d/1eudOzGmCdUco_PLLlmAfe8PWBfRuapBI/view?usp=drive_link)
-- 💻 Backend: (https://github.com/Lenin-Miranda/se_project_express)
-- 🕸️ Deploy:(https://www.wtwrle.ignorelist.com/)
+1. **Clona el repositorio**
+
+   ```bash
+   git clone https://github.com/tu-usuario/tu-repo.git
+   cd tu-repo
+   ```
+
+2. **Instala dependencias**
+
+   ```bash
+   npm install
+   ```
+
+3. **Inicia el servidor de desarrollo**
+
+   ```bash
+   npm run dev
+   ```
+
+4. **Configura las variables de entorno**  
+   Crea un archivo `.env` en la raíz del proyecto con las variables necesarias (ver sección [Variables de Entorno](#variables-de-entorno)).
+
+---
+
+## Despliegue en Producción
+
+1. **Genera la build de producción**
+
+   ```bash
+   npm run build
+   ```
+
+   Esto creará la carpeta `dist/` con los archivos estáticos listos para producción.
+
+2. **Sube la carpeta `dist/` a tu VM de Google Cloud**  
+   Puedes usar `scp`, `rsync` o cualquier método de transferencia de archivos.
+
+3. **Configura Nginx en tu VM** para servir los archivos estáticos y redirigir las peticiones API a tu backend.
+
+---
+
+## Variables de Entorno
+
+Crea un archivo `.env` en la raíz del proyecto con el siguiente contenido:
+
+```
+VITE_API_URL=https://api.wtwrle.ignorelist.com
+```
+
+Asegúrate de que tu código use esta variable para las peticiones al backend.
+
+---
+
+## Configuración de Nginx
+
+Ejemplo de bloque para servir el frontend:
+
+```nginx
+server {
+    listen 443 ssl;
+    server_name wtwrle.ignorelist.com www.wtwrle.ignorelist.com;
+
+    root /home/usuario/frontend/dist;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    ssl_certificate /etc/letsencrypt/live/wtwrle.ignorelist.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/wtwrle.ignorelist.com/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+}
+```
+
+Si tu backend está en otro subdominio (ej: `api.wtwrle.ignorelist.com`), asegúrate de que las peticiones desde el frontend usen ese dominio.
+
+---
+
+## Certificados SSL
+
+Se recomienda usar [Certbot](https://certbot.eff.org/) para obtener certificados gratuitos de Let's Encrypt.
+
+---
+
+## Autores
+
+- [Lenin Miranda](https://github.com/Lenin-Miranda)
 
 ---
 
