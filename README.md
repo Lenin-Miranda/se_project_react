@@ -1,10 +1,41 @@
-# WTWH (What to Wear)🌦👕
+# WTWR (What To Wear)
 
-A React application that displays the current weather based on your location and filters recommended clothing items accordingly.
+Aplicación web para compartir y consultar prendas de ropa según el clima.
+
+---
+
+## Tabla de Contenidos
+
+- [Descripción](#descripción)
+- [Tecnologías](#tecnologías)
+- [Estructura del Proyecto](#estructura-del-proyecto)
+- [Instalación Local](#instalación-local)
+- [Despliegue en Producción](#despliegue-en-producción)
+- [Variables de Entorno](#variables-de-entorno)
+- [Configuración de Nginx](#configuración-de-nginx)
+- [Certificados SSL](#certificados-ssl)
+- [Autores](#autores)
+
+---
+
+## Descripción
+
+WTWR es una aplicación web donde los usuarios pueden compartir prendas de ropa y ver recomendaciones basadas en el clima actual.
+
+---
+
+## Tecnologías
+
+- **Frontend:** React + Vite
+- **Despliegue:** Google Cloud VM, Nginx, Certbot (Let's Encrypt)
+
+---
+
+## Estructura del Proyecto
 
 ## 📌 Main Features
 
-- 🔍 Gets your location using the browser’s geolocation.
+- 🔍 Gets your location using the browser's geolocation.
 - 🌡 Fetches current temperature using an external API.
 - 🏙 Displays the name of your city.
 - 🧥 Filters and shows clothing cards based on the weather.
