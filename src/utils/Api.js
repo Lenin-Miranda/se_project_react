@@ -7,7 +7,7 @@ export function checkResponse(res) {
 
 const BASE_URL =
   process.env.NODE_ENV === "production"
-    ? "https://35.203.136.160"
+    ? "https://api.wtwrle.ignorelist.com"
     : "http://localhost:3001";
 
 export function getItems() {
