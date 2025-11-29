@@ -2,7 +2,7 @@ import { checkResponse } from "./Api";
 
 const BASE_URL =
   process.env.NODE_ENV === "production"
-    ? "https://api.wtwrle.ignorelist.com"
+    ? "https://se-project-express-m2qk.onrender.com"
     : "http://localhost:3001";
 
 export function signup({ name, password, email, avatar }) {
