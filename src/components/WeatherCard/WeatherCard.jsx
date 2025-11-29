@@ -1,6 +1,6 @@
 import "./WeatherCard.css";
 import sun from "../../assets/Ellipse.svg";
-import cloud from "../../assets/union.svg";
+import cloud from "../../assets/Union.svg";
 
 function WeatherCard({ temperature }) {
   return (
