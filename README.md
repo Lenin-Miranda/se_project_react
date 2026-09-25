@@ -1,151 +1,44 @@
-# WTWR (What To Wear)
+# WTWR — What to Wear
 
-Aplicación web para compartir y consultar prendas de ropa según el clima.
+Aplicación React para consultar el clima y organizar prendas según las condiciones del tiempo. Incluye registro/inicio de sesión, perfil y operaciones sobre prendas mediante una API Express.
 
----
+**Backend:** [se_project_express](https://github.com/Lenin-Miranda/se_project_express).
 
-## Tabla de Contenidos
+## Instalación local
 
-- [Descripción](#descripción)
-- [Tecnologías](#tecnologías)
-- [Estructura del Proyecto](#estructura-del-proyecto)
-- [Instalación Local](#instalación-local)
-- [Despliegue en Producción](#despliegue-en-producción)
-- [Variables de Entorno](#variables-de-entorno)
-- [Configuración de Nginx](#configuración-de-nginx)
-- [Certificados SSL](#certificados-ssl)
-- [Autores](#autores)
+Necesitas Node.js, npm y el backend para las funciones de cuenta y catálogo.
 
----
-
-## Descripción
-
-WTWR es una aplicación web donde los usuarios pueden compartir prendas de ropa y ver recomendaciones basadas en el clima actual.
-
----
-
-## Tecnologías
-
-- **Frontend:** React + Vite
-- **Despliegue:** Google Cloud VM, Nginx, Certbot (Let's Encrypt)
-
----
-
-## Estructura del Proyecto
-
-```
-/
-├── dist/         # Archivos estáticos generados para producción (build)
-├── src/          # Código fuente del frontend (React)
-├── public/       # Archivos públicos
-├── package.json  # Dependencias y scripts de npm
-├── vite.config.js
-└── README.md
+```bash
+git clone https://github.com/Lenin-Miranda/se_project_react.git
+cd se_project_react
+npm install
+npm run dev
 ```
 
----
+Abre la URL que imprime Vite. Inicia el backend en `http://localhost:3001`.
 
-## Instalación Local
+## Configuración
 
-1. **Clona el repositorio**
+- [src/utils/Api.js](src/utils/Api.js) y [src/utils/auth.js](src/utils/auth.js) seleccionan la URL del backend según el modo de ejecución.
+- [src/utils/WeatherApi.js](src/utils/WeatherApi.js) contiene las peticiones a OpenWeather y su configuración de acceso.
+- El código actual no lee variables `VITE_*` para esas integraciones. Añadirlas a un `.env` por sí solo no cambia el comportamiento.
 
-   ```bash
-   git clone https://github.com/tu-usuario/tu-repo.git
-   cd tu-repo
-   ```
+Configura tus propios servicios antes de usar el proyecto fuera de su entorno original.
 
-2. **Instala dependencias**
+## Comandos
 
-   ```bash
-   npm install
-   ```
+| Comando | Uso |
+| --- | --- |
+| `npm run dev` | Servidor Vite |
+| `npm run lint` | Revisión con ESLint |
+| `npm run build` | Compilación a `dist/` |
+| `npm run preview` | Previsualización local del build |
+| `npm run deploy` | Ejecuta el build; no publica archivos en un servidor |
 
-3. **Inicia el servidor de desarrollo**
+## Estructura
 
-   ```bash
-   npm run dev
-   ```
+`src/` contiene componentes, estilos e integración con APIs; `public/` guarda recursos públicos. `vite.config.js` configura el empaquetado.
 
-4. **Configura las variables de entorno**  
-   Crea un archivo `.env` en la raíz del proyecto con las variables necesarias (ver sección [Variables de Entorno](#variables-de-entorno)).
+## Verificación
 
----
-
-## Despliegue en Producción
-
-1. **Genera la build de producción**
-
-   ```bash
-   npm run build
-   ```
-
-   Esto creará la carpeta `dist/` con los archivos estáticos listos para producción.
-
-2. **Sube la carpeta `dist/` a tu VM de Google Cloud**  
-   Puedes usar `scp`, `rsync` o cualquier método de transferencia de archivos.
-
-3. **Configura Nginx en tu VM** para servir los archivos estáticos y redirigir las peticiones API a tu backend.
-
----
-
-## Variables de Entorno
-
-Crea un archivo `.env` en la raíz del proyecto con el siguiente contenido:
-
-```
-VITE_API_URL=https://api.wtwrle.ignorelist.com
-```
-
-Asegúrate de que tu código use esta variable para las peticiones al backend.
-
----
-
-## Configuración de Nginx
-
-Ejemplo de bloque para servir el frontend:
-
-```nginx
-server {
-    listen 443 ssl;
-    server_name wtwrle.ignorelist.com www.wtwrle.ignorelist.com;
-
-    root /home/usuario/frontend/dist;
-    index index.html;
-
-    location / {
-        try_files $uri $uri/ /index.html;
-    }
-
-    ssl_certificate /etc/letsencrypt/live/wtwrle.ignorelist.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/wtwrle.ignorelist.com/privkey.pem;
-    include /etc/letsencrypt/options-ssl-nginx.conf;
-    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
-}
-```
-
-Si tu backend está en otro subdominio (ej: `api.wtwrle.ignorelist.com`), asegúrate de que las peticiones desde el frontend usen ese dominio.
-
----
-
-## Certificados SSL
-
-Se recomienda usar [Certbot](https://certbot.eff.org/) para obtener certificados gratuitos de Let's Encrypt.
-
----
-
-## Autores
-
-- [Lenin Miranda](https://github.com/Lenin-Miranda)
-
----
-
-## 🧠 Weather Logic
-
-We use `navigator.geolocation.getCurrentPosition()` to get coordinates. Then we make two API requests:
-
-1. **Weather data** from OpenWeather:
-
-```js
-fetchWeatherByCoords(latitude, longitude)s
-
-```
+Ejecuta lint y build. Comprueba clima, registro/login, perfil y creación/eliminación de prendas con el backend local. No hay script de pruebas automatizadas. Para publicar `dist/`, configura el hosting y sus rutas de la aplicación por separado.
